@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.medimateadmin.API.Routes
 import com.example.medimateadmin.Response.GetAllOrderDetailsItem
+import com.example.medimateadmin.viewmodel.AddToAvailableProductsViewModel
 import com.example.medimateadmin.viewmodel.GetProductViewModel
 import com.example.medimateadmin.viewmodel.PendingOrderViewModel
 import com.example.medimateadmin.viewmodel.UpdateOrderViewModel
@@ -48,7 +49,8 @@ fun PendingOrder(
     applicationContext: Context,
     navController: NavHostController,
     updateOrderViewModel: UpdateOrderViewModel,
-    getProductViewModel: GetProductViewModel
+    getProductViewModel: GetProductViewModel,
+    addToAvailableProductsViewModel: AddToAvailableProductsViewModel
 ) {
 
     var orderList = pendingOrderViewModel.orderList.value
@@ -77,8 +79,8 @@ fun PendingOrder(
         Column (modifier = Modifier.padding(it)){
             LazyColumn {
                 itemsIndexed(orderList.reversed()) { index, item ->
-                    if (item.isApproved == ""){
-                        OrderCard(item, navController, pendingOrderViewModel, updateOrderViewModel, applicationContext)
+                    if (item.isApproved == 2){
+                        OrderCard(item, navController, pendingOrderViewModel, updateOrderViewModel, addToAvailableProductsViewModel, applicationContext)
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                 }
@@ -95,6 +97,7 @@ fun OrderCard(
     navController: NavHostController,
     pendingOrderViewModel: PendingOrderViewModel,
     updateOrderViewModel: UpdateOrderViewModel,
+    addToAvailableProductsViewModel: AddToAvailableProductsViewModel,
     applicationContext: Context,
 
     ) {
@@ -125,7 +128,7 @@ fun OrderCard(
                         color = Color(0xFF221938),
                         modifier = Modifier.width(150.dp)
                     )
-                    Text(text = item.date_of_craete_order)
+                    Text(text = item.date_of_order_creation)
                 }
                 Row(
                     modifier = Modifier
@@ -140,7 +143,17 @@ fun OrderCard(
                     ) {
                         Button(
                             onClick = {
-                                updateOrderViewModel.updateOrderStatus(item.id.toString(), "1", applicationContext)
+                                updateOrderViewModel.updateOrderStatus(item.order_id, "1", applicationContext)
+                                addToAvailableProductsViewModel.addToAvailableProducts(
+                                    item.product_name,
+                                    item.category,
+                                    item.certified.toString(),
+                                    item.price.toString(),
+                                    item.quantity.toString(),
+                                    item.user_name,
+                                    item.user_id,
+                                    applicationContext
+                                )
                             },
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(Color(0xFF3061DA))
@@ -151,7 +164,7 @@ fun OrderCard(
 
                         Button(
                             onClick = {
-                                updateOrderViewModel.updateOrderStatus(item.id.toString(), "2", applicationContext)
+                                updateOrderViewModel.updateOrderStatus(item.order_id, "0", applicationContext)
                             },
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(Color(0xFFFF6767))

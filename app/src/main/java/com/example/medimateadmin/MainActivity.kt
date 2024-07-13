@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.medimateadmin.ui.theme.MediMateAdminTheme
 import com.example.medimateadmin.viewmodel.AddProductViewModel
+import com.example.medimateadmin.viewmodel.AddToAvailableProductsViewModel
 import com.example.medimateadmin.viewmodel.GetProductViewModel
 import com.example.medimateadmin.viewmodel.GetUserViewModel
 import com.example.medimateadmin.viewmodel.PendingOrderViewModel
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
             val pendingOrderViewModel : PendingOrderViewModel by viewModels()
             val updateOrderViewModel : UpdateOrderViewModel by viewModels()
             val updateAllUserViewModel: UpdateAllUsersDetailsViewModel by viewModels()
+            val addToAvailableProductsViewModel : AddToAvailableProductsViewModel by viewModels()
 
             val navController = rememberNavController()
             MediMateAdminTheme {
@@ -46,6 +48,7 @@ class MainActivity : ComponentActivity() {
                             pendingOrderViewModel,
                             updateOrderViewModel,
                             updateAllUserViewModel,
+                            addToAvailableProductsViewModel,
                             applicationContext
                         )
                     }

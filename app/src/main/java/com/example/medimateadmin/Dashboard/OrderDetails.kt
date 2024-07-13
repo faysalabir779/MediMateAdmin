@@ -67,12 +67,7 @@ fun OrderDetails(
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
-            Spacer(modifier = Modifier.height(7.dp))
-            Text(
-                text = "Address: ${data?.user_address}",
-                fontSize = 18.sp,
-                modifier = Modifier.padding(horizontal = 15.dp)
-            )
+
             Spacer(modifier = Modifier.height(7.dp))
             Text(
                 text = "Product Name: ${data?.product_name}",
@@ -87,13 +82,7 @@ fun OrderDetails(
             )
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Phone: ${data?.phone}",
-                fontSize = 18.sp,
-                modifier = Modifier.padding(horizontal = 15.dp)
-            )
-            Spacer(modifier = Modifier.height(7.dp))
-            Text(
-                text = "Date Of Account Creation: ${data?.date_of_craete_order}",
+                text = "Date Of Account Creation: ${data?.date_of_order_creation}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )

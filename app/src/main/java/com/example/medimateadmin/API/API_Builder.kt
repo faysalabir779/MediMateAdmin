@@ -1,6 +1,7 @@
 package com.example.medimateadmin.API
 
 import com.example.medimateadmin.Response.AddProductResponse
+import com.example.medimateadmin.Response.AddToAvailableProduct
 import com.example.medimateadmin.Response.GetAllOrderDetails
 import com.example.medimateadmin.Response.ProductDetails
 import com.example.medimateadmin.Response.UpdateAllUser
@@ -30,23 +31,35 @@ interface API_Builder {
         @Field("name") name: String,
         @Field("price") price: String,
         @Field("category") category: String,
-        @Field("stack") stock: String,
+        @Field("stock") stock: String,
         @Field("certified") certified: String,
     ):Response<AddProductResponse>
 
     @FormUrlEncoded
     @PATCH("/updateOrderDetails")
     suspend fun updateOrderStats(
-        @Field("id") orderId: String,
+        @Field("order_id") orderId: String,
         @Field("isApproved") isApproved: String
     ): Response<UpdateOrderStatus>
 
     @FormUrlEncoded
     @PATCH("/updateUserAllDetails")
     suspend fun updateAllUsersDetails(
-        @Field("User_id") userId: String,
+        @Field("user_id") userId: String,
         @Field("isApproved") name: String
     ):Response<UpdateAllUser>
+
+    @FormUrlEncoded
+    @POST("/addToAvailableProducts")
+    suspend fun addToAvailableProducts(
+        @Field("product_name") product_Name : String,
+        @Field("category") category : String,
+        @Field("certified") certified : String,
+        @Field("price") price : String,
+        @Field("stock") stock : String,
+        @Field("user_name") user_name : String,
+        @Field("user_id") user_id : String,
+    ): Response<AddToAvailableProduct>
 
     companion object{
         const val BASE_URL = "https://faysalabir779.pythonanywhere.com"

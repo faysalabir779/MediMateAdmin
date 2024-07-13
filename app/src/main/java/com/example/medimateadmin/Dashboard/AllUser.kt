@@ -117,7 +117,7 @@ fun userDataItem(
         ) {
             Column(modifier = Modifier.clickable {
                 navController.navigate(
-                    Routes.userDetails(item.User_id)
+                    Routes.userDetails(item.user_id)
                 )
             }) {
                 Row(
@@ -127,13 +127,13 @@ fun userDataItem(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = item.Name,
+                        text = item.name,
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color(0xFF221938),
                         modifier = Modifier.width(150.dp)
                     )
-                    Text(text = item.Date_of_account_creation)
+                    Text(text = item.date_of_account_creation)
                 }
                 Row(
                     modifier = Modifier
@@ -148,23 +148,23 @@ fun userDataItem(
                     ) {
                         Button(
                             onClick = {
-                                updateAllUserViewModel.updateUserAccess(item.User_id, "1", applicationContext)
+                                updateAllUserViewModel.updateUserAccess(item.user_id, "1", applicationContext)
                             },
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(Color(0xFF3061DA))
                         ) {
 
-                            Text(text = if (item.isApproved == "1") "Approved" else "Approve")
+                            Text(text = if (item.isApproved == 1) "Approved" else "Approve")
                         }
 
                         Button(
                             onClick = {
-                                updateAllUserViewModel.updateUserAccess(item.User_id, "2", applicationContext)
+                                updateAllUserViewModel.updateUserAccess(item.user_id, "0", applicationContext)
                             },
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(Color(0xFFFF6767))
                         ) {
-                            Text(text = if (item.isApproved == "2") "Blocked" else "Block")
+                            Text(text = if (item.isApproved == 0) "Blocked" else "Block")
                         }
                     }
                 }

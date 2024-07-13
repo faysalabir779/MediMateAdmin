@@ -41,7 +41,7 @@ fun userdetails(
     applicationContext: Context
 ) {
 
-    val data = viewModel.userData.value.find { it.User_id == userId }
+    val data = viewModel.userData.value.find { it.user_id == userId }
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
@@ -62,49 +62,49 @@ fun userdetails(
     }) {
         Column(modifier = Modifier.padding(it)) {
             Text(
-                text = "UserId: ${data?.User_id}",
+                text = "UserId: ${data?.user_id}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Name: ${data?.Name}",
+                text = "Name: ${data?.name}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Address: ${data?.Address}",
+                text = "Address: ${data?.address}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Email: ${data?.Email}",
+                text = "Email: ${data?.email}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Phone: ${data?.Phone}",
+                text = "Phone: ${data?.phone_info}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Date Of Account Creation: ${data?.Date_of_account_creation}",
+                text = "Date Of Account Creation: ${data?.date_of_account_creation}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Approved: ${if (data?.isApproved == "1") "Yes" else "No"}",
+                text = "Approved: ${if (data?.isApproved == 1) "Yes" else "No"}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
             Spacer(modifier = Modifier.height(7.dp))
             Text(
-                text = "Blocked: ${if (data?.isApproved == "2") "Yes" else "No"}",
+                text = "Blocked: ${if (data?.isApproved == 2) "Yes" else "No"}",
                 fontSize = 18.sp,
                 modifier = Modifier.padding(horizontal = 15.dp)
             )
@@ -121,14 +121,14 @@ fun userdetails(
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFF3061DA))
                 ) {
-                    Text(text = if (data?.isApproved == "1") "Approved" else "Approve")
+                    Text(text = if (data?.isApproved == 1) "Approved" else "Approve")
                 }
                 Button(
                     onClick = { updateAllUserViewModel.updateUserAccess(userId, "2", applicationContext)},
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFFFF6767))
                 ) {
-                    Text(text = if (data?.isApproved == "2") "Blocked" else "Block")
+                    Text(text = if (data?.isApproved == 2) "Blocked" else "Block")
                 }
             }
         }

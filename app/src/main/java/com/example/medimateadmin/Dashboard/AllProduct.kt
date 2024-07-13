@@ -123,7 +123,7 @@ fun productCard(item: ProductDetailsItem) {
                 ) {
                     Text(text = "Price: ৳${item.price}")
                     Text(text = "Category: ${item.category}")
-                    Text(text = "Stock: ${item.stack}")
+                    Text(text = "Stock: ${item.stock}")
                 }
             }
 

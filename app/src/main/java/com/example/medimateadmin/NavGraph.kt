@@ -16,6 +16,7 @@ import com.example.medimateadmin.Dashboard.OrderDetails
 import com.example.medimateadmin.Dashboard.PendingOrder
 import com.example.medimateadmin.Dashboard.userdetails
 import com.example.medimateadmin.viewmodel.AddProductViewModel
+import com.example.medimateadmin.viewmodel.AddToAvailableProductsViewModel
 import com.example.medimateadmin.viewmodel.GetProductViewModel
 import com.example.medimateadmin.viewmodel.GetUserViewModel
 import com.example.medimateadmin.viewmodel.PendingOrderViewModel
@@ -31,6 +32,7 @@ fun NavGraph(
     pendingOrderViewModel: PendingOrderViewModel,
     updateOrderViewModel: UpdateOrderViewModel,
     updateAllUserViewModel: UpdateAllUsersDetailsViewModel,
+    addToAvailableProductsViewModel: AddToAvailableProductsViewModel,
     applicationContext: Context
 ) {
     NavHost(
@@ -79,7 +81,8 @@ fun NavGraph(
                 applicationContext,
                 navController,
                 updateOrderViewModel,
-                getProductViewModel
+                getProductViewModel,
+                addToAvailableProductsViewModel
             )
         }
     }
