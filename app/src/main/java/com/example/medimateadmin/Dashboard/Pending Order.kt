@@ -1,6 +1,7 @@
 package com.example.medimateadmin.Dashboard
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,6 +46,7 @@ import com.example.medimateadmin.viewmodel.AddToAvailableProductsViewModel
 import com.example.medimateadmin.viewmodel.GetProductViewModel
 import com.example.medimateadmin.viewmodel.PendingOrderViewModel
 import com.example.medimateadmin.viewmodel.UpdateOrderViewModel
+import kotlin.math.log
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,13 +56,15 @@ fun PendingOrder(
     navController: NavHostController,
     updateOrderViewModel: UpdateOrderViewModel,
     getProductViewModel: GetProductViewModel,
-    addToAvailableProductsViewModel: AddToAvailableProductsViewModel
+    addToAvailableProductsViewModel: AddToAvailableProductsViewModel,
+    getProductViewModel1: GetProductViewModel
 ) {
 
     var orderList = pendingOrderViewModel.orderList.value
 
     LaunchedEffect(key1 = true) {
         pendingOrderViewModel.getAllOrder()
+        getProductViewModel.getProduct()
     }
 
     Scaffold(topBar = {
@@ -75,12 +83,20 @@ fun PendingOrder(
             }
         )
 
-    }){
-        Column (modifier = Modifier.padding(it)){
+    }) {
+        Column(modifier = Modifier.padding(it)) {
             LazyColumn {
                 itemsIndexed(orderList.reversed()) { index, item ->
-                    if (item.isApproved == 2){
-                        OrderCard(item, navController, pendingOrderViewModel, updateOrderViewModel, addToAvailableProductsViewModel, applicationContext)
+                    if (item.isApproved == 2) {
+                        OrderCard(
+                            item,
+                            navController,
+                            pendingOrderViewModel,
+                            getProductViewModel1,
+                            updateOrderViewModel,
+                            addToAvailableProductsViewModel,
+                            applicationContext
+                        )
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                 }
@@ -96,11 +112,29 @@ fun OrderCard(
     item: GetAllOrderDetailsItem,
     navController: NavHostController,
     pendingOrderViewModel: PendingOrderViewModel,
+    getProductViewModel1: GetProductViewModel,
     updateOrderViewModel: UpdateOrderViewModel,
     addToAvailableProductsViewModel: AddToAvailableProductsViewModel,
     applicationContext: Context,
 
     ) {
+    val allProduct = getProductViewModel1.data.value.filter { it.products_id == item.product_id}
+    Log.d("size", "OrderCard: ${allProduct.size}")
+
+
+    var availableStock by remember {
+        mutableStateOf(0)
+    }
+    var productId by remember {
+        mutableStateOf("")
+    }
+    allProduct.forEach {
+        availableStock = it.stock
+        Log.d("availableStock", "OrderCard: ${it.stock}")
+        productId = it.products_id
+    }
+
+
     Column(modifier = Modifier) {
         ElevatedCard(
             onClick = { /* Handle item click */ },
@@ -141,9 +175,21 @@ fun OrderCard(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxWidth()
                     ) {
+
                         Button(
                             onClick = {
-                                updateOrderViewModel.updateOrderStatus(item.order_id, "1", applicationContext)
+                                var remainingStock = availableStock - item.quantity
+                                updateOrderViewModel.updateOrderStatus(
+                                    item.order_id,
+                                    "1",
+                                    applicationContext
+                                )
+
+                                pendingOrderViewModel.updateProductStock(
+                                    productId,
+                                    remainingStock
+                                )
+
                                 addToAvailableProductsViewModel.addToAvailableProducts(
                                     item.product_name,
                                     item.category,
@@ -164,7 +210,11 @@ fun OrderCard(
 
                         Button(
                             onClick = {
-                                updateOrderViewModel.updateOrderStatus(item.order_id, "0", applicationContext)
+                                updateOrderViewModel.updateOrderStatus(
+                                    item.order_id,
+                                    "0",
+                                    applicationContext
+                                )
                             },
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(Color(0xFFFF6767))

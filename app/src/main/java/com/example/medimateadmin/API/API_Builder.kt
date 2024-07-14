@@ -6,6 +6,7 @@ import com.example.medimateadmin.Response.GetAllOrderDetails
 import com.example.medimateadmin.Response.ProductDetails
 import com.example.medimateadmin.Response.UpdateAllUser
 import com.example.medimateadmin.Response.UpdateOrderStatus
+import com.example.medimateadmin.Response.UpdateProductStock
 import com.example.medimateadmin.Response.UserDetails
 import retrofit2.Response
 import retrofit2.http.Field
@@ -60,6 +61,13 @@ interface API_Builder {
         @Field("user_name") user_name : String,
         @Field("user_id") user_id : String,
     ): Response<AddToAvailableProduct>
+
+    @FormUrlEncoded
+    @PATCH("/updateProduct")
+    suspend fun updateProduct(
+        @Field("products_id") product_id: String,
+        @Field("stock") stock: Int,
+    ): Response<UpdateProductStock>
 
     companion object{
         const val BASE_URL = "https://faysalabir779.pythonanywhere.com"

@@ -82,7 +82,8 @@ fun NavGraph(
                 navController,
                 updateOrderViewModel,
                 getProductViewModel,
-                addToAvailableProductsViewModel
+                addToAvailableProductsViewModel,
+                getProductViewModel
             )
         }
     }

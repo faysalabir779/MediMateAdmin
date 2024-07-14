@@ -20,4 +20,12 @@ class PendingOrderViewModel: ViewModel() {
             }
         }
     }
+
+    fun updateProductStock(productId: String, remainingStock: Int) {
+        viewModelScope.launch {
+            val result = RetrofitInstance.api.updateProduct(productId, remainingStock)
+            if (result.isSuccessful) {
+            }
+        }
+    }
 }

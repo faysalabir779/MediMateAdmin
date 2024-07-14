@@ -1,5 +1,6 @@
 package com.example.medimateadmin.Dashboard
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -47,6 +48,7 @@ fun AllProduct(
 ) {
 
     val data = getProductViewModel.data.value
+    Log.d("size", "OrderCard: ${data.size}")
 
     LaunchedEffect(key1 = true) {
         getProductViewModel.getProduct()
