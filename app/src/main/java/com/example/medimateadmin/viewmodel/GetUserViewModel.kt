@@ -1,13 +1,13 @@
 package com.example.medimateadmin.viewmodel
 
-import android.util.Log
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.medimateadmin.API.RetrofitInstance
 import com.example.medimateadmin.Response.UserDetailsItem
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class GetUserViewModel : ViewModel() {
     var state = mutableStateOf("")
@@ -16,6 +16,9 @@ class GetUserViewModel : ViewModel() {
 
     init {
         state.value = State.DEFAULT.name
+        viewModelScope.launch {
+            getUser()
+        }
     }
 
     suspend fun getUser() {
@@ -28,6 +31,15 @@ class GetUserViewModel : ViewModel() {
                 state.value = State.SUCCESS.name
             } else {
                 state.value = State.FAILED.name
+            }
+        }
+    }
+
+    fun deleteSpecificUser(userId: String, applicationContext: Context){
+        viewModelScope.launch {
+            val result = RetrofitInstance.api.deleteSpecificUser(userId)
+            if (result.isSuccessful) {
+                Toast.makeText(applicationContext, "User Deleted", Toast.LENGTH_SHORT).show()
             }
         }
     }

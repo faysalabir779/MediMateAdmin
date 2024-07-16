@@ -144,11 +144,12 @@ fun AddProductScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             val listOfCategory = listOf(
-                "Antivirals",
-                "Anxiolytics",
-                "Bipolar agents",
-                "Antibacterials",
-                "Anticonvulsants"
+                "Vitamins and Supplements",
+                "Paracetamol",
+                "Antibiotics",
+                "Antacids",
+                "Antidiabetics",
+                "Antipsychotics"
             )
             var isExpend by remember { mutableStateOf(false) }
 

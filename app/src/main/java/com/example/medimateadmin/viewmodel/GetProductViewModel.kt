@@ -10,6 +10,12 @@ import kotlinx.coroutines.launch
 class GetProductViewModel : ViewModel() {
     val data = mutableStateOf<List<ProductDetailsItem>>(emptyList())
 
+    init {
+        viewModelScope.launch {
+            getProduct()
+        }
+    }
+
     suspend fun getProduct() {
         viewModelScope.launch {
             val result = RetrofitInstance.api.getAllProduct()

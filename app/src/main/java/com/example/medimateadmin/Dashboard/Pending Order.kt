@@ -2,6 +2,7 @@ package com.example.medimateadmin.Dashboard
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -35,12 +37,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.medimateadmin.API.Routes
+import com.example.medimateadmin.R
 import com.example.medimateadmin.Response.GetAllOrderDetailsItem
 import com.example.medimateadmin.viewmodel.AddToAvailableProductsViewModel
 import com.example.medimateadmin.viewmodel.GetProductViewModel
@@ -69,15 +74,15 @@ fun PendingOrder(
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
-            title = { Text("Pending Orders") },
+            title = { Text("Pending Order", fontWeight = FontWeight.ExtraBold) },
             navigationIcon = {
                 IconButton(onClick = { /* doSomething() */ }) {
                     Icon(
-                        imageVector = Icons.Filled.ArrowBack,
+                        painterResource(id = R.drawable.back),
                         contentDescription = "Localized description",
-                        modifier = Modifier.clickable {
-                            navController.navigate(Routes.Dashboard)
-                        }
+                        modifier = Modifier
+                            .clickable { navController.navigate(Routes.Dashboard) }
+                            .size(26.dp)
                     )
                 }
             }
@@ -141,8 +146,15 @@ fun OrderCard(
             modifier = Modifier
                 .height(110.dp)
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            colors = CardDefaults.cardColors(Color(0xFFE4D9FF))
+                .padding(horizontal = 20.dp)
+                .clip(RoundedCornerShape(15.dp))
+                .border(
+                    width = 2.dp, color = Color(0xFF111111), shape = RoundedCornerShape(15.dp)
+                ),
+            colors = CardDefaults.cardColors(
+                Color.White
+            )
+
         ) {
             Column(modifier = Modifier.clickable {
                 navController.navigate(
@@ -202,7 +214,7 @@ fun OrderCard(
                                 )
                             },
                             shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(Color(0xFF3061DA))
+                            colors = ButtonDefaults.buttonColors(Color(0xFF111111))
                         ) {
 
                             Text(text = "Approve")
@@ -217,7 +229,7 @@ fun OrderCard(
                                 )
                             },
                             shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(Color(0xFFFF6767))
+                            colors = ButtonDefaults.buttonColors(Color(0xFFF80808))
                         ) {
                             Text(text = "Block")
                         }

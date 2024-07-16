@@ -61,7 +61,7 @@ fun NavGraph(
             })
         ) { backStackEntry ->
             val orderId = backStackEntry.arguments?.getString("orderId") ?: ""
-            OrderDetails(navController, pendingOrderViewModel, orderId)
+            OrderDetails(navController, pendingOrderViewModel, orderId, updateOrderViewModel,applicationContext)
         }
 
 
