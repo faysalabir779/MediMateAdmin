@@ -27,6 +27,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +51,9 @@ fun AllProduct(
     navController: NavHostController = rememberNavController(),
     getProductViewModel: GetProductViewModel = GetProductViewModel()
 ) {
+    LaunchedEffect(key1 = true) {
+        getProductViewModel.getProduct()
+    }
 
     val data = getProductViewModel.data.value
     Log.d("size", "OrderCard: ${data.size}")

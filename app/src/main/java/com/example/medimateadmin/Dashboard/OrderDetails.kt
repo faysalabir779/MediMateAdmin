@@ -22,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +45,9 @@ fun OrderDetails(
     updateOrderViewModel: UpdateOrderViewModel,
     applicationContext: Context,
 ) {
+    LaunchedEffect(key1 = true) {
+        pendingOrderViewModel.getAllOrder()
+    }
 
     val data = pendingOrderViewModel.orderList.value.find { it.id == orderId.toInt() }
 
@@ -65,8 +69,11 @@ fun OrderDetails(
 
     }) {
         Column(modifier = Modifier.padding(it)) {
-            Column (modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp)){
-                Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+            Column(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
                         text = "Name: ",
                         fontSize = 18.sp,
@@ -80,7 +87,10 @@ fun OrderDetails(
                 }
 
                 Spacer(modifier = Modifier.height(7.dp))
-                Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
                         text = "Product Name: ",
                         fontSize = 18.sp,
@@ -96,7 +106,10 @@ fun OrderDetails(
 
                 Spacer(modifier = Modifier.height(7.dp))
 
-                Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
                         text = "Quantity: ",
                         fontSize = 18.sp,
@@ -110,7 +123,10 @@ fun OrderDetails(
                 }
 
                 Spacer(modifier = Modifier.height(7.dp))
-                Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Text(
                         text = "Date: ",
                         fontSize = 18.sp,
@@ -124,42 +140,6 @@ fun OrderDetails(
                 }
                 Spacer(modifier = Modifier.height(7.dp))
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .padding(horizontal = 15.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Button(
-                        onClick = { updateOrderViewModel.updateOrderStatus(
-                            data!!.order_id,
-                            "1",
-                            applicationContext
-                        )
-                            Toast.makeText(applicationContext, "Order Approved", Toast.LENGTH_SHORT)
-                                .show()},
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(Color(0xFF111111))
-                    ) {
-                        Text(text = "Approve")
-                    }
-                    Spacer(modifier = Modifier.width(15.dp))
-                    Button(
-                        onClick = {updateOrderViewModel.updateOrderStatus(
-                            data!!.order_id,
-                            "0",
-                            applicationContext
-                        )
-                            Toast.makeText(applicationContext, "Order Declined", Toast.LENGTH_SHORT)
-                                .show()},
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(Color(0xFFF80808))
-                    ) {
-                        Text(text = "Decline")
-                    }
-                }
 
             }
 

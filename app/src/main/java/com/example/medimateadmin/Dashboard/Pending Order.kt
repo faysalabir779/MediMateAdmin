@@ -231,7 +231,7 @@ fun OrderCard(
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(Color(0xFFF80808))
                         ) {
-                            Text(text = "Block")
+                            Text(text = "Declined")
                         }
                     }
                 }

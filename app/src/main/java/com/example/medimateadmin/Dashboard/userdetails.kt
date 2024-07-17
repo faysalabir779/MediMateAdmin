@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -86,7 +87,7 @@ fun userdetails(
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                     Text(
-                        text = data!!.name,
+                        text = data.name,
                         fontSize = 18.sp,
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
@@ -96,11 +97,13 @@ fun userdetails(
                     Text(
                         text = "Address: ",
                         fontSize = 18.sp,
-                        modifier = Modifier.padding(horizontal = 15.dp)
+                        modifier = Modifier.padding(horizontal = 15.dp),
+
                     )
                     Text(
-                        text = data!!.address,
+                        text = data.address,
                         fontSize = 18.sp,
+                        textAlign = TextAlign.End,
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                 }
@@ -113,7 +116,7 @@ fun userdetails(
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                     Text(
-                        text = data!!.email,
+                        text = data.email,
                         fontSize = 18.sp,
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
@@ -126,7 +129,7 @@ fun userdetails(
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                     Text(
-                        text = data!!.phone_info,
+                        text = data.phone_number,
                         fontSize = 18.sp,
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
@@ -141,7 +144,7 @@ fun userdetails(
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                     Text(
-                        text = data!!.date_of_account_creation,
+                        text = data.date_of_account_creation,
                         fontSize = 18.sp,
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
@@ -156,7 +159,7 @@ fun userdetails(
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                     Text(
-                        text = if (data?.isApproved == 1) "Yes" else "No",
+                        text = if (data.isApproved == 1) "Yes" else "No",
                         fontSize = 18.sp,
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
@@ -169,7 +172,7 @@ fun userdetails(
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
                     Text(
-                        text = if (data?.isApproved == 0) "Yes" else "No",
+                        text = if (data.isApproved == 0) "Yes" else "No",
                         fontSize = 18.sp,
                         modifier = Modifier.padding(horizontal = 15.dp)
                     )
